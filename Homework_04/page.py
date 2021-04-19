@@ -15,7 +15,7 @@ class PageLenta():
 
 class PageMail():
     def __init__(self):
-        self.url = 'https://news.mail.ru/politics/'
+        self.url = 'https://news.mail.ru/'
         self.news_block = ".//div[@class='cols__inner']"
         self.date_format = '%H:%M, %d %B %Y'
         self.date_xpath = ""

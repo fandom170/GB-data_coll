@@ -70,13 +70,11 @@ class NewspageProcessing():
             news_name = news_data.xpath(self.name_xpath)
             news_date = news_data.xpath(self.news_date)
             news_source = news_data.xpath(self.source_xpath)
-
             newsblock['name'] = news_name[0]
             newsblock['link'] = news_link
             newsblock['date'] = news_date[0]
             newsblock['source'] = news_source[0]
             news.append(newsblock)
-            print(newsblock)
         return news
 
 
