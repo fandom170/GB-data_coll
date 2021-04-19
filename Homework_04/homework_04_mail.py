@@ -18,7 +18,7 @@ mngl.db_init('news')
 mngl.collection_init("Mail")
 
 counter = mngl.add_new_entries(mail_news)
-print(f"{counter} new entries has been entered.")
+print(f"{counter} new entries have been entered.")
 
 
 

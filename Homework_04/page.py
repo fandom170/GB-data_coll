@@ -41,3 +41,4 @@ class PageYandex():
         self.news_block = ".//article[contains(@class, 'mg-card')]"
         self.source_xpath = ".//a[@class='mg-card__source-link']/@aria-label"
         self.date_format = ', %d %B %Y'
+        self.news_date = ""
