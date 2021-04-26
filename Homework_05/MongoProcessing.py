@@ -43,4 +43,24 @@ class MongoProcessing():
         hash_total = str((hashlib.md5(line.encode())).hexdigest())
         return hash_total
 
+    def add_new_entries(self, data):
+        """Function adds elements from data to mongo database. Duplicate check is performed by link to job which
+        should be unique for each job"""
+        counter = 0
+        id_list = []
+        for item in self.collection.find():
+            id_list.append(item['_id'])
+
+        for elem in data:
+            try:
+                self.collection.insert_one(elem)
+            except DuplicateKeyError:
+                # filter = {'_id': elem['_id']}
+                # update = {'$set': {'Price': elem['Price']}}
+                # self.collection.update(filter, update)
+                print("elem skipped")
+                continue
+            counter += 1
+        return counter
+
 

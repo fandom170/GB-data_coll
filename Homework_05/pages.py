@@ -25,7 +25,7 @@ class EmailInternal():
     def __int__(self):
         self.content = ".//td[@class='main_border_mr_css_attr']"
         self.date = ".//div[@class='letter__date']"
-        self.sender = ".//div[@class='letter__author']/span[@class = 'letter-contact']"
+        self.email_sender = ".//span[@class = 'letter-contact'][1]"
 
 
 class MvideoMainPage():

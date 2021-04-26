@@ -42,7 +42,7 @@ except Exception as e:
     print(e)
 # processing list of emails after login
 
-emails = {}
+emails = []
 time.sleep(2)
 email_list = driver.find_elements(By.XPATH, maillist.singleMail)
 print("email list len ", len(email_list))
@@ -61,35 +61,27 @@ for email in email_list:
     print(main_window)
 
     email.send_keys(Keys.CONTROL + Keys.RETURN)
-
-    chwd = driver.window_handles
-    print(chwd)
-    print(len(chwd))
-
+    #chwd = driver.window_handles
     driver.switch_to.window(driver.window_handles[-1])
-    #for w in chwd:
-    #    if (w != main_window):
-    #        #driver.switch_to.window(w)
-     #       driver.switch_to.window(driver.window_handles[-1])
-     #       print("w", w)
+    time.sleep(1)
+    try:
+        sender = driver.find_element_by_xpath(mailInternal.email_sender).getText()
+        email_attrs['sender'] = sender
+        sender_email = driver.find_element_by_xpath(mailInternal.email_sender).get_attribute('title')
+        email_attrs['sender_email'] = sender_email
+        email_date = driver.find_element_by_xpath(mailInternal.date).text
+        email_attrs['email_date'] = email_date
+        email_text = driver.find_element_by_xpath(mailInternal.content).text
+        email_attrs['email_content'] = email_text
+
+    except AttributeError :
+        print("email skipped")
+        continue
+    email['id'] = email_attrs
+
     #driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + Keys.TAB)
-    #driver.switch_to.window(main_window)
-    # do something
-    time.sleep(2)
-    print("window handling")
-    #sender = driver.find_element_by_xpath(mailInternal.sender).getText()
-    #sender_email = driver.find_element_by_xpath(mailInternal.sender).get_attribute('title')
-    #email_text = driver.find_element_by_xpath(mailInternal.content).text
-    #email_date = driver.find_element_by_xpath(mailInternal.date).text
-    #driver.close()
-
-    driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 'w')
-    #driver.switch_to.window(main_window)
+    driver.close()
     driver.switch_to.window(driver.window_handles[0])
-
-    #email_attrs['email_content'] = email_content
-    # Switch back to the first tab with URL A
-#    driver.back()
     driver.execute_script("arguments[0].scrollIntoView();", email)
 
 
@@ -99,24 +91,54 @@ actions.perform()
 """
 # scroll to take all available emails in the list
 while True:
-    old_len = len(email_list)
-    new_emails = driver.find_elements_by_xpath(maillist.singleMail)
-    last_email = email_list[-1]
-    for email in new_emails:
-        email_list.append(email)
-    new_last_email = email_list[-1]
-    new_len = len(email_list)
-    time.sleep(3)
-    driver.execute_script("arguments[0].scrollIntoView();", email_list[-1])
+    list_len = len(emails)
+    email_list = driver.find_elements(By.XPATH, maillist.singleMail)
+    print("email list len ", len(email_list))
+    for email in email_list:
+        email_attrs = {}
+        email_date_title = driver.find_element_by_xpath(maillist.email_date).get_attribute('title')
+        email_date_text = driver.find_element_by_xpath(maillist.email_date).text
+        email_sender = driver.find_element_by_xpath(maillist.email_sender).get_attribute('title')
+        email_id = email.get_attribute('data-id')
+        email_attrs['email_date_title'] = email_date_title
+        email_attrs['email_date_text'] = email_date_text
+        email_attrs['email_sender'] = email_date_title
 
-    if last_email == new_last_email:
+        main_window = driver.current_window_handle
+        print(main_window)
+
+        email.send_keys(Keys.CONTROL + Keys.RETURN)
+        # chwd = driver.window_handles
+        driver.switch_to.window(driver.window_handles[-1])
+        time.sleep(1)
+        try:
+            sender = driver.find_element_by_xpath(mailInternal.email_sender).getText()
+            email_attrs['sender'] = sender
+            sender_email = driver.find_element_by_xpath(mailInternal.email_sender).get_attribute('title')
+            email_attrs['sender_email'] = sender_email
+            email_date = driver.find_element_by_xpath(mailInternal.date).text
+            email_attrs['email_date'] = email_date
+            email_text = driver.find_element_by_xpath(mailInternal.content).text
+            email_attrs['email_content'] = email_text
+
+        except AttributeError:
+            print("email skipped")
+            continue
+
+        email['id'] = email_attrs
+
+        # driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + Keys.TAB)
+        driver.close()
+        driver.switch_to.window(driver.window_handles[0])
+        driver.execute_script("arguments[0].scrollIntoView();", email)
+
+        new_list_len = len(emails)
+
+    if list_len == new_list_len:
         print("last email")
         break
 
 print("full len", len(email_list))
-
-#removing of duplicates for email.list
-email_list = list(dict.fromkeys(email_list))
 
 email_data = []
 
@@ -128,10 +150,10 @@ for email in email_list:
     url = maillist.url + mail_url
     driver.get(url)
 
-    sender = driver.find_element_by_xpath(emailInternal.sender).getText()
-    sender_email = driver.find_element_by_xpath(emailInternal.sender).get_attribute('title')
-    email_text = driver.find_element_by_xpath(emailInternal.content).text
-    email_date = driver.find_element_by_xpath(emailInternal.date).text
+    sender = driver.find_element_by_xpath(mailInternal.sender).getText()
+    sender_email = driver.find_element_by_xpath(mailInternal.sender).get_attribute('title')
+    email_text = driver.find_element_by_xpath(mailInternal.content).text
+    email_date = driver.find_element_by_xpath(mailInternal.date).text
 
     driver.back()
 
@@ -145,11 +167,11 @@ for email in email_list:
 """
 driver.close()
 
-"""mongo.db_init("homework_05")
+mongo.db_init("homework_05")
 mongo.collection_init("Mailru")
-mongo.add_new_entries_mail(email_data)"""
+counter = mongo.add_new_entries_mail(emails)
 
-print("end of program execution")
+print(f"end of program execution. {counter} new entries has been added.")
 
 
 
