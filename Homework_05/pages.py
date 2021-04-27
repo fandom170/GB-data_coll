@@ -12,32 +12,20 @@ class MailRu ():
         self.password = 'NextPassword172'
         self.login = 'study.ai_172@mail.ru'
 
-
-
-    def fLogin(self):
-        return By.XPATH(self.fLogin)
-
-    def bEnterPassword(self):
-        return By.XPATH(self.bEnterPassword)
-
-    def fPassword(self):
-        return By.XPATH(self.fPassword)
-
-    def bEnter(self):
-        return By.XPATH(self.bEnter)
-
-
 class MailList ():
     def __init__(self):
-        self.singleMail = ".//a[contains(@class, 'js-letter-list-item llc_normal')]"
+        self.url = "https://e.mail.ru"
+        self.singleMail = ".//a[@class='llc js-tooltip-direction_letter-bottom js-letter-list-item llc_normal']"
+        self.email_date = ".//div[@class='llc__item llc__item_date']"
+        self.email_sender = ".//span[@class='ll-crpt']"
 
-    def aSingleMail(self):
-        return By.XPATH(self.singleMail)
 
 
-
-class emailInternal():
-    pass
+class EmailInternal():
+    def __int__(self):
+        self.content = ".//td[@class='main_border_mr_css_attr']"
+        self.date = ".//div[@class='letter__date']"
+        self.email_sender = ".//span[@class = 'letter-contact'][1]"
 
 
 class MvideoMainPage():
