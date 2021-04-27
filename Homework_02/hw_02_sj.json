@@ -1,0 +1,34 @@
+[
+    {
+        "title": "React developer",
+        "min_salary": "70000",
+        "max_salary": "80000",
+        "currency": "руб.",
+        "link": "https://www.superjob.ru/vakansii/react-developer-36578092.html",
+        "site_name": "superjob.ru"
+    },
+    {
+        "title": "Full-stack PHP Developer (Laravel, Vue.js)",
+        "min_salary": "100000",
+        "max_salary": null,
+        "currency": "руб.",
+        "link": "https://www.superjob.ru/vakansii/full-stack-php-developer-36411184.html",
+        "site_name": "superjob.ru"
+    },
+    {
+        "title": "Junior / Middle Ruby Developer",
+        "min_salary": null,
+        "max_salary": null,
+        "currency": null,
+        "link": "https://www.superjob.ru/vakansii/junior-36558988.html",
+        "site_name": "superjob.ru"
+    },
+    {
+        "title": "PHP-программист (Битрикс)",
+        "min_salary": "100000",
+        "max_salary": "120000",
+        "currency": "руб.",
+        "link": "https://www.superjob.ru/vakansii/php-programmist-36464603.html",
+        "site_name": "superjob.ru"
+    }
+]
