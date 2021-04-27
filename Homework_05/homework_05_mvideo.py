@@ -58,7 +58,7 @@ for product in products:
 
 mongo.db_init("homework_05")
 mongo.collection_init("mvideo")
-mongo.add_new_entries(new_products)
+mongo.add_new_entries_mvideo(new_products)
 
 
 driver.close()
