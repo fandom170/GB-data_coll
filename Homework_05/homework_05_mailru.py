@@ -77,6 +77,7 @@ for email in email_list:
 print("First block completed")
 # scroll to take all available emails in the list
 while True:
+    time.sleep(2)
     email_list = driver.find_elements(By.XPATH, mailList.singleMail)
     list_len = len(emails)
     for email in email_list:
@@ -124,6 +125,113 @@ mongo.collection_init("Mailru")
 counter = mongo.add_new_entries_mail(emails)
 
 print(f"end of program execution. {counter} new entries has been added.")
+
+"""email list len  23
+Сегодня, 23:01
+Сегодня, 21:48
+Сегодня, 20:07
+Сегодня, 20:06
+Сегодня, 15:39
+Сегодня, 15:37
+Сегодня, 7:34
+Вчера, 15:43
+24 апреля, 16:10
+23 апреля, 9:36
+22 апреля, 20:19
+22 апреля, 17:42
+22 апреля, 17:41
+22 апреля, 12:32
+21 апреля, 3:15
+20 апреля, 8:20
+16 апреля, 15:03
+15 апреля, 4:04
+14 апреля, 11:03
+13 апреля, 11:04
+10 апреля, 8:24
+9 апреля, 10:45
+7 апреля, 18:35
+First block completed
+2 апреля, 15:14
+new iteration
+1 апреля, 13:33
+new iteration
+30 марта, 7:46
+new iteration
+29 марта, 19:41
+new iteration
+28 марта, 5:21
+new iteration
+27 марта, 13:42
+new iteration
+26 марта, 4:15
+new iteration
+25 марта, 14:40
+new iteration
+24 марта, 16:06
+new iteration
+24 марта, 16:04
+new iteration
+24 марта, 15:37
+new iteration
+24 марта, 10:35
+new iteration
+24 марта, 10:31
+new iteration
+24 марта, 10:25
+new iteration
+24 марта, 3:53
+new iteration
+23 марта, 21:52
+new iteration
+23 марта, 17:00
+new iteration
+22 марта, 16:34
+new iteration
+20 марта, 10:22
+new iteration
+19 марта, 17:39
+new iteration
+19 марта, 13:39
+new iteration
+19 марта, 8:00
+new iteration
+18 марта, 18:53
+new iteration
+18 марта, 15:34
+new iteration
+17 марта, 15:03
+new iteration
+11 марта, 16:53
+new iteration
+8 марта, 13:33
+new iteration
+4 марта, 18:26
+new iteration
+3 марта, 13:10
+new iteration
+3 марта, 0:01
+new iteration
+2 марта, 19:31
+new iteration
+1 марта, 3:01
+new iteration
+26 февраля, 11:55
+new iteration
+26 февраля, 11:12
+new iteration
+25 февраля, 21:32
+new iteration
+25 февраля, 20:46
+new iteration
+25 февраля, 9:01
+new iteration
+24 февраля, 10:42
+new iteration
+23 февраля, 13:28
+new iteration
+last email
+full len 24
+end of program execution. 62 new entries has been added."""
 
 
 
