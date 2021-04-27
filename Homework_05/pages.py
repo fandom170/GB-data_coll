@@ -1,6 +1,12 @@
 from selenium.webdriver.common.by import By
 
 
+class EmailInternal():
+    def __init__(self):
+        self.content = ".//div[@class='letter__body']"  #".//td[@class='main_border_mr_css_attr']"
+        self.email_date = ".//div[@class='letter__date']"
+        self.email_sender = ".//div[@class='letter__author']/span"
+
 class MailRu ():
     def __init__(self):
         self.url = 'https://mail.ru'
@@ -9,23 +15,16 @@ class MailRu ():
         self.fPassword = ".//input[@data-testid = 'password-input']"
         self.bEnter = ".//button[@data-testid='login-to-mail']"
 
-        self.password = 'NextPassword172'
+        self.password = 'o%IyneXIrI11'
         self.login = 'study.ai_172@mail.ru'
+
 
 class MailList ():
     def __init__(self):
         self.url = "https://e.mail.ru"
-        self.singleMail = ".//a[@class='llc js-tooltip-direction_letter-bottom js-letter-list-item llc_normal']"
-        self.email_date = ".//div[@class='llc__item llc__item_date']"
-        self.email_sender = ".//span[@class='ll-crpt']"
+        self.singleMail = ".//a[contains(@class,'js-tooltip-direction_letter-bottom js-letter-list-item')]"
 
 
-
-class EmailInternal():
-    def __int__(self):
-        self.content = ".//td[@class='main_border_mr_css_attr']"
-        self.date = ".//div[@class='letter__date']"
-        self.email_sender = ".//span[@class = 'letter-contact'][1]"
 
 
 class MvideoMainPage():

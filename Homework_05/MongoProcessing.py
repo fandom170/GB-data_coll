@@ -55,12 +55,23 @@ class MongoProcessing():
             try:
                 self.collection.insert_one(elem)
             except DuplicateKeyError:
-                # filter = {'_id': elem['_id']}
-                # update = {'$set': {'Price': elem['Price']}}
-                # self.collection.update(filter, update)
                 print("elem skipped")
                 continue
             counter += 1
         return counter
+
+    def add_new_entries_mail(self, data):
+        """Function adds elements from data to mongo database. Duplicate check is performed by link to job which
+        should be unique for each job"""
+        counter = 0
+        for elem in data:
+            try:
+                self.collection.insert_one(elem)
+            except DuplicateKeyError:
+                print("elem skipped")
+                continue
+            counter += 1
+        return counter
+
 
 
