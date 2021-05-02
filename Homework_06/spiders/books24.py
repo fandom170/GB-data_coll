@@ -43,7 +43,11 @@ class Books24Spider(scrapy.Spider):
         main_price = response.css("div.item-actions__price-old::text").extract_first()
         bargain_price = response.css("div.item-actions__price b::text").extract_first()
         currency = response.css("div.item-actions__price::text").extract_first()
-        book_rate = response.css("div.rating__rate-value._bold::text").extract_first()
+
+        book_rate = response.css("div.item-detail__information-item span.rating__rate-value::text").get()
+
+        print(book_rate)
+
         yield BookCollectItem(book_name=book_name,
                               book_link=book_link,
                               authors=authors,
