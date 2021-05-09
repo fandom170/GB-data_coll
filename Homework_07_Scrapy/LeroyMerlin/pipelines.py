@@ -24,7 +24,7 @@ class LeroymerlinPipeline:
         goods_data = {}
         goods_data['_id'] = self.hash_calc(item['item_link'])
         goods_data['name'] = item['item_name']
-        goods_data['price'] = item['item_price']
+        goods_data['price'] = self.price_processing(item['item_price'])
         goods_data['link'] = item['item_link']
         goods_data['params'] = self.get_item_params(item['item_data_keys'], item['item_data_vals'])
         query = {'_id': goods_data['_id']}
@@ -39,6 +39,10 @@ class LeroymerlinPipeline:
 
     def hash_calc(self, item):
         return str((hashlib.md5(item.encode())).hexdigest())
+
+    def price_processing(self, price):
+        num_price = float(price.replace(' ', ''))
+        return num_price
 
 
 class LeroymerlinPhotosPipeline (ImagesPipeline):
@@ -70,5 +74,6 @@ class LeroymerlinPhotosPipeline (ImagesPipeline):
     def thumb_path(self, request, thumb_id, response=None, info=None):
         line = response.url.split('/')[-1]
         goods_id = line.split('.')[0]
+        goods_id_prc = goods_id.split('_')[0]
         thumb_guid = hashlib.sha1(to_bytes(request.url)).hexdigest()
-        return f'thumbs/{thumb_id}/{goods_id}/{thumb_guid}.jpg'
+        return f'thumbs/{thumb_id}/{goods_id_prc}/{thumb_guid}.jpg'

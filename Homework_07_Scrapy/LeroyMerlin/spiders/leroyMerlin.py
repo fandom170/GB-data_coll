@@ -13,11 +13,15 @@ class LeroymerlinSpider(scrapy.Spider):
 
 
     def parse(self, response: HtmlResponse):
-        next_page = response.xpath(".//a[contains(@class,'s15wh9uj_plp')]/@href").extract_first()
+        """"Take link """
+        next_page = response.xpath(".//a[contains(@class,'s15wh9uj_plp')]/@href").extract()[-1]
+        print("This is next page ", next_page)
         if next_page:
             yield response.follow(next_page, callback=self.parse)
         
         item_links = response.xpath(".//div[contains(@class,'phytpj4_plp')]/a")
+        
+        # here can be processing of links
         
         for link in item_links:
             yield response.follow(link, callback=self.item_parse)
