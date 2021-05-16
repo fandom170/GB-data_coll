@@ -16,9 +16,10 @@ class InstausersSpider(scrapy.Spider):
 
     inst_login_link = 'https://www.instagram.com/accounts/login/ajax/'
     insta_login = ''
-    insta_pwd = ""
+    insta_pwd = "#P"
 
     parse_user = 'ggtoys'  # user for connections analyze
+    parse_users = ['scalescience', 'ggtoys']
 
     graphql_url = 'https://www.instagram.com/graphql/query/?'
 
@@ -45,12 +46,12 @@ class InstausersSpider(scrapy.Spider):
                 f'/{self.parse_user}',
                 callback=self.user_data_parse,
                 cb_kwargs={'username': self.parse_user}
-            )
+                )
 
     def user_data_parse(self, response: HtmlResponse, username):
         """Function take data from the page for further using"""
         user_id = self.fetch_user_id(response.text, username)
-
+        print()
         variables = {'id': user_id,
                      'first': 12}
 
@@ -78,12 +79,10 @@ class InstausersSpider(scrapy.Spider):
     def user_followers_parse(self, response: HtmlResponse, username, user_id, variables):
         j_data = json.loads(response.text)
         page_info = j_data.get('data').get('user').get('edge_followed_by').get('page_info')
-        print()
         if page_info.get('has_next_page'):
             variables['after'] = page_info['end_cursor']
             params = self.get_next_page_params(variables)
             url_followers = f'{self.graphql_url}query_hash={self.query_hash_followers}&variables={{{params}}}'
-            print()
             yield response.follow(
                 url_followers,
                 callback=self.user_followers_parse,
@@ -92,11 +91,9 @@ class InstausersSpider(scrapy.Spider):
                            'variables': deepcopy(variables)})
 
         followers = j_data.get('data').get('user').get('edge_followed_by').get('edges')
-        print()
         for follower in followers:
             user_data = follower.get('node')
             item_name = 'followers'
-            print()
             item = InstagramItem(
                 user_id=user_id,
                 user_name=username,
@@ -141,7 +138,6 @@ class InstausersSpider(scrapy.Spider):
                     user_data=user_data
                 )
                 yield item
-        print()
 
     def fetch_csrf_token(self, text):
         """Take csrf token from js script in the top of page"""
