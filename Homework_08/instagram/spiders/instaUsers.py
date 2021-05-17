@@ -12,11 +12,11 @@ from instagram.items import InstagramItem
 class InstausersSpider(scrapy.Spider):
     name = 'instaUsers'
     allowed_domains = ['instagram.com']
-    start_urls = ['https://instagram.com/']
+    start_urls = ['https://www.instagram.com/']
 
     inst_login_link = 'https://www.instagram.com/accounts/login/ajax/'
     insta_login = ''
-    insta_pwd = "#P"
+    insta_pwd = ""
 
     parse_user = 'ggtoys'  # user for connections analyze
     parse_users = ['scalescience', 'ggtoys']
@@ -42,11 +42,14 @@ class InstausersSpider(scrapy.Spider):
         """Take data about authentication from response from server"""
         j_body = json.loads(response.text)
         if j_body['authenticated']:
-            yield response.follow(
-                f'/{self.parse_user}',
-                callback=self.user_data_parse,
-                cb_kwargs={'username': self.parse_user}
-                )
+            for user in self.parse_users:
+                yield response.follow(
+                    # f'/{self.parse_user}',
+                    f'/{str(user)}',
+                    callback=self.user_data_parse,
+                    #cb_kwargs={'username': self.parse_user}
+                    cb_kwargs={'username':user}
+                    )
 
     def user_data_parse(self, response: HtmlResponse, username):
         """Function take data from the page for further using"""
@@ -146,6 +149,7 @@ class InstausersSpider(scrapy.Spider):
 
     # Получаем id желаемого пользователя
     def fetch_user_id(self, text, username):
+        print()
         matched = re.search(
             '{\"id\":\"\\d+\",\"username\":\"%s\"}' % username, text
         ).group()
